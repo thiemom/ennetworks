@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+    <script src="processing-1.4.1.min.js"></script>
+    <title>EnnetWorks.com</title>
+    <style type="text/css">
+#EW.main {
+  font-size: larger;
+}
+</style></head>
+  <body id="EW.main"> 
+    <h1><img title="EnnetWorks" alt="EnnetWorks: webpage" src="Ennetworks%20logo.png"></h1>
+    <p>I created this webpage to learn about practical web development.&nbsp;</p>
+    <p>True, there isn't a whole lot on the page. Because I believe it is
+      important to <em>make</em> something to learn, I created a little web
+      game using <a target="_blank" title="processingjs.org" href="http://processingjs.org">processing.js</a>
+      and the excellent app <a target="_blank" title="csatonce.org" href="http://csatonce.org">csatonce</a>.</p>
+    <p>If your browser supports processing you should see the game just below
+      this line. <br>
+    </p>
+    <p>To play hover your mouse (finger) over the canvas to direct the bottom
+      "bat" and bounce back the ball. To restart the game, reload the page.<br>
+    </p>
+    <p>
+      <script type="application/processing">
+        
+        // defaults (screen 480 x 320)
+        int w = window.innerWidth;
+        int h = window.innerHeight;
+        if (h == undefined) {
+          h = screen.width;
+          w = screen.height; }
+        
+        float speedball = 2; // ball speed
+        float speedbat = 5; // speed bat player
+        float speedbata = 2; // speed bat ai
+        float accely = 0.01; // accel vy aft hit bat
+        int D = 12; // diameter ball
+        int len = 50; // length of bats
+        int batstroke = 10; // bat thickness
+        var ainame = "computer";
+        
+        // check device
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|ipad|android|mac)/);
+        int foundDevice = 0;
+        
+        if(agentID.indexOf("iphone")>=0){
+          ainame = "iphone";
+          w -= 10;
+          h -= 100;
+          foundDevice = 1;
+        }
+        if(agentID.indexOf("ipod")>=0){
+          ainame = "ipod";
+          w -= 10;
+          h -= 100;
+          foundDevice = 1;
+        }
+        if(agentID.indexOf("ipad")>=0){
+          ainame = "ipad";
+          w -= 10;
+          h -= 100;
+          foundDevice = 1;
+        }
+        if(agentID.indexOf("android")>=0){
+          ainame = "android";
+          w -= 10;
+          h -= 100;
+          foundDevice = 1;
+        }
+        if(agentID.indexOf("mac")>=0){
+          ainame = "mac";  
+          w *= 0.6;
+          h *= 0.6;
+          foundDevice = 1;
+        }
+        
+        if (foundDevice == 0) {
+          w *= 0.5;
+          h *= 0.5;
+        }
+        
+        // scaling
+        speedball *= h/350;
+        speedbat *= w/300;
+        speedbata *= w/300;
+        accely *= h/350;
+        D *= w/300;
+        len *= w/300;
+        batstroke *= h/350;
+        
+        // init
+        int xp = w/2;
+        int yp = h;
+        int xa = w/2;
+        int ya = 0;
+        int xb = w/2;
+        int yb = h/2;
+        
+        float erra = len/2; // random err bat pos ai
+        int updatedelay = 20; // delay position update ai
+        int tocenter = 1; // ai behav after bat
+        int pointsforwin = 100000; // new start 
+        int showtraject = 1;
+        
+        int vxp = 0;
+        int vxa = speedbat;
+        float vxb = ((random()-0.5)*2)*(speedball*0.75);
+        float vyb = sqrt(speedball*speedball-vxb*vxb);
+          
+        int scorep = 0;
+        int scorea = 0;
+        int restartgame = 0;
+        
+        float xpredict = w/2;
+        float xpa = xpredict;
+        int updcnt = 0;
+
+        void setup()
+        {
+          size(w,h);
+          fill(255);
+          stroke(255);
+          frameRate(50);
+          PFont fontA = loadFont("arial");
+          textFont(fontA, 14*h/350);  
+        } 
+          
+        void draw() {
+        
+          // clear canvas
+          background(0);
+          
+          // box
+          strokeWeight(1);
+          line(1,1,w-1,1);
+          line(w,1,w-1,h-1);
+          line(w-1,h-1,1,h-1);
+          line(1,h-1,1,1);
+
+          if (vyb<0) {
+             xpredict = xb - (yb-1)/vyb*vxb; }
+          else {
+             xpredict = xb + (h-yb-1)/vyb*vxb; }
+
+          if ( (tocenter==1) && (vyb<0)  ) {
+             xpa = xpredict+((random()-0.5)*erra);}
+          else {
+             xpa = w/2; }
+          
+          if ((vyb>0) || (updcnt>=updatedelay)) {
+             updcnt = 0;
+          if (xpa < xa) vxa = -speedbata;
+          if (xpa > xa) vxa = speedbata;
+          if (abs(xpa - xa)<= (0.05*len)) vxa = 0; }
+          
+          updcnt += 1;
+        
+          if (mouseX < xp) vxp = -speedbat;
+          if (mouseX > xp) vxp = speedbat;
+          if (abs(mouseX - xp)<= (0.05*len)) vxp = 0;
+          
+          xp += vxp;
+          xa += vxa;
+          
+          xb += vxb;
+          yb += vyb;
+          
+          if ((xa-len/2) < 0) vxa = 0;
+          if ((xa+len/2) > w) vxa = 0;
+          
+          if ((xp-len/2) < 0) vxp = 0;
+          if ((xp+len/2) > w) vxp = 0;
+          
+          if ( xb<0 ) {
+             vxb = abs(vxb);
+             xb = 0; }
+          if ( xb>w ) {
+             vxb = -abs(vxb);
+             xb = w; }
+          
+         // min max position
+         if ( xa<(len/2) ) xa = (len/2); 
+         if ( xa>(w-len/2) ) xa = (w-len/2); 
+         if ( xp<(len/2) ) xp = (len/2); 
+         if ( xp>(w-len/2) ) xp = (w-len/2); 
+        
+         if (yb>h) 
+         {
+           if ( (xb>=(xp-(len+batstroke)/2)) && (xb<=(xp+(len+batstroke)/2)) ) 
+           {
+               vxb += 0.5*vxp;
+               vyb = (-abs(vyb)-random()*accely);
+               yb = h;
+           }
+           else 
+           {
+               scorea += 1;
+               restartgame = 1;
+           }
+         };
+         if (yb<0) 
+         {
+           if ( (xb>=(xa-(len+batstroke)/2)) && (xb<=(xa+(len+batstroke)/2)) ) 
+           {
+               vxb += 0.5*vxa;
+               vyb = (abs(vyb)+random()*accely);
+               yb = 0;
+           }
+           else 
+           {
+               scorep += 1;
+               restartgame = 1;
+           }
+         };
+        
+         if (restartgame == 1) {
+             restartgame = 0;
+             speedball = 2*h/350;
+             speedball *= (1 + 0.1*random());
+             vxb = ((random()-0.5)*2)*(speedball*0.75);
+             vyb = sqrt(speedball*speedball-vxb*vxb);
+             xb = w/2;
+             yb = h/2; 
+           };
+        
+         if (showtraject == 1) {
+           stroke(128);
+           if (vyb<0) {
+             line(xb,yb,xpredict,1);
+           }
+           if (vyb>0) {
+             line(xb,yb,xpredict,h-1);
+           }
+         }
+         stroke(168);
+         strokeWeight(batstroke);
+         line(xp-len/2, yp-1, xp+len/2, yp-1);
+         line(xa-len/2, ya+1, xa+len/2, ya+1);
+        
+         text("player: "+scorep+", "+ainame+": "+scorea, 10*w/300, 20*h/350);
+          
+         // draw the ball
+         strokeWeight(1);
+         fill(255);
+         stroke(255);
+         ellipse(xb,yb,D,D);
+          
+         if (scorea >= pointsforwin)
+         {
+           alert (ainame+" wins :-(");
+           scorea = 0;
+           scorep = 0;
+         }
+         if (scorep >= pointsforwin)
+         {
+           alert ("you win!");
+           scorea = 0;
+           scorep = 0;
+         };          
+        }
+      </script> <canvas width="200" height="200"></canvas></p>
+    <p><br>
+    </p>
+    <p>The processing script:<br>
+      <script src="https://gist.github.com/4396062.js"></script> </p>
+  </body>
+</html>
