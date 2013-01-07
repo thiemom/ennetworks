@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <title>EnnetWorks</title>
+    <script src="processing-1.4.1.min.js"></script>
+    <style type="text/css">/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.6.0
+*/
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}del,ins{text-decoration:none;}body{font:16px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea{font:100% arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}body{text-align:center;}#ft{clear:both;}#doc,#doc2,#doc3,#doc4,.yui-t1,.yui-t2,.yui-t3,.yui-t4,.yui-t5,.yui-t6,.yui-t7{margin:auto;text-align:left;width:57.69em;*width:56.25em;min-width:750px;}#doc2{width:73.076em;*width:71.25em;}#doc3{margin:auto 10px;width:auto;}#doc4{width:74.923em;*width:73.05em;}.yui-b{position:relative;}.yui-b{_position:static;}#yui-main .yui-b{position:static;}#yui-main,.yui-g .yui-u .yui-g{width:100%;}{width:100%;}.yui-t1 #yui-main,.yui-t2 #yui-main,.yui-t3 #yui-main{float:right;margin-left:-25em;}.yui-t4 #yui-main,.yui-t5 #yui-main,.yui-t6 #yui-main{float:left;margin-right:-25em;}.yui-t1 .yui-b{float:left;width:12.30769em;*width:12.00em;}.yui-t1 #yui-main .yui-b{margin-left:13.30769em;*margin-left:13.05em;}.yui-t2 .yui-b{float:left;width:13.8461em;*width:13.50em;}.yui-t2 #yui-main .yui-b{margin-left:14.8461em;*margin-left:14.55em;}.yui-t3 .yui-b{float:left;width:23.0769em;*width:22.50em;}.yui-t3 #yui-main .yui-b{margin-left:24.0769em;*margin-left:23.62em;}.yui-t4 .yui-b{float:right;width:13.8456em;*width:13.50em;}.yui-t4 #yui-main .yui-b{margin-right:14.8456em;*margin-right:14.55em;}.yui-t5 .yui-b{float:right;width:18.4615em;*width:18.00em;}.yui-t5 #yui-main .yui-b{margin-right:19.4615em;*margin-right:19.125em;}.yui-t6 .yui-b{float:right;width:23.0769em;*width:22.50em;}.yui-t6 #yui-main .yui-b{margin-right:24.0769em;*margin-right:23.62em;}.yui-t7 #yui-main .yui-b{display:block;margin:0 0 1em 0;}#yui-main .yui-b{float:none;width:auto;}.yui-gb .yui-u,.yui-g .yui-gb .yui-u,.yui-gb .yui-g,.yui-gb .yui-gb,.yui-gb .yui-gc,.yui-gb .yui-gd,.yui-gb .yui-ge,.yui-gb .yui-gf,.yui-gc .yui-u,.yui-gc .yui-g,.yui-gd .yui-u{float:left;}.yui-g .yui-u,.yui-g .yui-g,.yui-g .yui-gb,.yui-g .yui-gc,.yui-g .yui-gd,.yui-g .yui-ge,.yui-g .yui-gf,.yui-gc .yui-u,.yui-gd .yui-g,.yui-g .yui-gc .yui-u,.yui-ge .yui-u,.yui-ge .yui-g,.yui-gf .yui-g,.yui-gf .yui-u{float:right;}.yui-g div.first,.yui-gb div.first,.yui-gc div.first,.yui-gd div.first,.yui-ge div.first,.yui-gf div.first,.yui-g .yui-gc div.first,.yui-g .yui-ge div.first,.yui-gc div.first div.first{float:left;}.yui-g .yui-u,.yui-g .yui-g,.yui-g .yui-gb,.yui-g .yui-gc,.yui-g .yui-gd,.yui-g .yui-ge,.yui-g .yui-gf{width:49.1%;}.yui-gb .yui-u,.yui-g .yui-gb .yui-u,.yui-gb .yui-g,.yui-gb .yui-gb,.yui-gb .yui-gc,.yui-gb .yui-gd,.yui-gb .yui-ge,.yui-gb .yui-gf,.yui-gc .yui-u,.yui-gc .yui-g,.yui-gd .yui-u{width:32%;margin-left:1.99%;}.yui-gb .yui-u{*margin-left:1.9%;*width:31.9%;}.yui-gc div.first,.yui-gd .yui-u{width:66%;}.yui-gd div.first{width:32%;}.yui-ge div.first,.yui-gf .yui-u{width:74.2%;}.yui-ge .yui-u,.yui-gf div.first{width:24%;}.yui-g .yui-gb div.first,.yui-gb div.first,.yui-gc div.first,.yui-gd div.first{margin-left:0;}.yui-g .yui-g .yui-u,.yui-gb .yui-g .yui-u,.yui-gc .yui-g .yui-u,.yui-gd .yui-g .yui-u,.yui-ge .yui-g .yui-u,.yui-gf .yui-g .yui-u{width:49%;*width:48.1%;*margin-left:0;}.yui-g .yui-g .yui-u{width:48.1%;}.yui-g .yui-gb div.first,.yui-gb .yui-gb div.first{*margin-right:0;*width:32%;_width:31.7%;}.yui-g .yui-gc div.first,.yui-gd .yui-g{width:66%;}.yui-gb .yui-g div.first{*margin-right:4%;_margin-right:1.3%;}.yui-gb .yui-gc div.first,.yui-gb .yui-gd div.first{*margin-right:0;}.yui-gb .yui-gb .yui-u,.yui-gb .yui-gc .yui-u{*margin-left:1.8%;_margin-left:4%;}.yui-g .yui-gb .yui-u{_margin-left:1.0%;}.yui-gb .yui-gd .yui-u{*width:66%;_width:61.2%;}.yui-gb .yui-gd div.first{*width:31%;_width:29.5%;}.yui-g .yui-gc .yui-u,.yui-gb .yui-gc .yui-u{width:32%;_float:right;margin-right:0;_margin-left:0;}.yui-gb .yui-gc div.first{width:66%;*float:left;*margin-left:0;}.yui-gb .yui-ge .yui-u,.yui-gb .yui-gf .yui-u{margin:0;}.yui-gb .yui-gb .yui-u{_margin-left:.7%;}.yui-gb .yui-g div.first,.yui-gb .yui-gb div.first{*margin-left:0;}.yui-gc .yui-g .yui-u,.yui-gd .yui-g .yui-u{*width:48.1%;*margin-left:0;} .yui-gb .yui-gd div.first{width:32%;}.yui-g .yui-gd div.first{_width:29.9%;}.yui-ge .yui-g{width:24%;}.yui-gf .yui-g{width:74.2%;}.yui-gb .yui-ge div.yui-u,.yui-gb .yui-gf div.yui-u{float:right;}.yui-gb .yui-ge div.first,.yui-gb .yui-gf div.first{float:left;}.yui-gb .yui-ge .yui-u,.yui-gb .yui-gf div.first{*width:24%;_width:20%;}.yui-gb .yui-ge div.first,.yui-gb .yui-gf .yui-u{*width:73.5%;_width:65.5%;}.yui-ge div.first .yui-gd .yui-u{width:65%;}.yui-ge div.first .yui-gd div.first{width:32%;}#bd:after,.yui-g:after,.yui-gb:after,.yui-gc:after,.yui-gd:after,.yui-ge:after,.yui-gf:after{content:".";display:block;height:0;clear:both;visibility:hidden;}#bd,.yui-g,.yui-gb,.yui-gc,.yui-gd,.yui-ge,.yui-gf{zoom:1;}</style>
+    <style type="text/css">/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.6.0
+*/
+h1{font-size:138.5%;}h2{font-size:123.1%;}h3{font-size:108%;}h1,h2,h3{margin:1em 0;}h1,h2,h3,h4,h5,h6,strong{font-weight:bold;}abbr,acronym{border-bottom:1px dotted #000;cursor:help;} em{font-style:italic;}blockquote,ul,ol,dl{margin:1em;}ol,ul,dl{margin-left:2em;}ol li{list-style:decimal outside;}ul li{list-style:disc outside;}dl dd{margin-left:1em;}th,td{border:1px solid #000;padding:.5em;}th{font-weight:bold;text-align:center;}caption{margin-bottom:.5em;text-align:center;}p,fieldset,table,pre{margin-bottom:1em;}input[type=text],input[type=password],textarea{width:12.25em;*width:11.9em;}
+</style> <style type="text/css">
+ul {
+  list-style-type: none;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  overflow: hidden;
+  font-variant: small-caps;
+}
+  li a:link, a:visited {
+  display: block;
+  width: 12em;
+  height: 1em;
+  font-weight: bold;
+  color: black;
+  background-color: #CCCCCC;
+  text-align: center;
+  padding-top: 0.5em;
+  padding-right: 0.1em;
+  padding-bottom: 0.5em;
+  padding-left: 0.1em;
+  text-decoration: none;
+  -epub-text-transform: uppercase;
+  text-transform: uppercase;
+  border-top-color: white;
+  border-right-color: white;
+  border-bottom-color: white;
+  border-left-color: white;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-top-width: 0.1em;
+  border-right-width: 0.1em;
+  border-bottom-width: 0.1em;
+  border-left-width: 0.1em;
+}
+li a:hover, a:active  {
+  color: black;
+  background-color: #EEEEEE;
+}
+    
+</style> <meta content="Thiemo" name="author">
+    <meta content="A first webpage" name="description">
+    <meta content="processing, javascript, csatonce" name="keywords">
+    <meta content="BlueGriffon wysiwyg editor" name="generator">
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  </head>
+  <body style="color: black;">
+    <div class="yui-t1" id="doc3">
+      <div id="hd" align="left">
+        <h1 align="center"><a target="_top" title="EnnetWorks Home" href="index.html"><img
+              title="EnnetWorks"
+              alt="EnnetWorks.com"
+              src="Ennetworks%20logo.jpg">
+          </a></h1>
+        <hr style="width: 100%; height: 0pt; border-style: solid;"> </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+            <div class="yui-g">
+              <p>I created this webpage to learn about practical web
+                development.&nbsp;</p>
+              <p>True, there isn't a whole lot on the page. Because I believe it
+                is important to <em>make</em> something to learn, I created a
+                very simple web game using <a target="_blank" title="processingjs.org"
+                  href="http://processingjs.org">processing.js</a>
+                and the fun app <a target="_blank" title="csatonce.org" href="http://csatonce.org">csatonce</a>.</p>
+              <p>To play, move your mouse over the game (the canvas). The bottom
+                "bat" will follow your mouse. Use the bat to bounce back the
+                ball. Hint: if you move your bat while you hit the ball, you
+                change the ball's velocity. <br>
+              </p>
+              <p>To restart the game, reload the page.</p>
+              <p>If your browser supports processing you should see the game
+                just below this line. </p>
+              <script type="application/processing">
+                
+                /* @pjs pauseOnBlur="true"; */ 
+             
+                // defaults (screen 480 x 320)
+                int w = 300;
+                int h = 350;
+                float speedball = 2; // ball speed
+                float speedbat = 5; // speed bat player
+                float speedbata = 2; // speed bat ai
+                float accely = 0.2; // accel vy aft hit bat
+                int D = 20; // diameter ball
+                int len = 50; // length of bats
+                int batstroke = 10; // bat thickness
+                var ainame = "computer"; // display name
+                
+                // check device
+                var deviceAgent = navigator.userAgent.toLowerCase();
+                var agentID = deviceAgent.match(/(iphone|ipad|android|mac)/);
+                
+                if(agentID.indexOf("iphone")>=0){
+                  ainame = "iphone";
+                  w = 300;
+                  h = 360;
+                }
+                if(agentID.indexOf("ipad")>=0){
+                  ainame = "ipad";
+                  w = (int)(screen.width/320*300);
+                  h = (int)(screen.height/480*360);
+                }
+                if(agentID.indexOf("android")>=0){
+                  ainame = "android";
+                  w = (int)(screen.width/320*300-10); 
+                  h = (int)(screen.height/480-10);
+                }
+                if(agentID.indexOf("mac")>=0){
+                  ainame = "mac";
+                  w = 300;
+                  h = 300;
+                }
+                
+                if ((w == undefined) || (w<=0) ) w = 300;
+                if ((h == undefined) || (h<=0) ) h = 300;
+                
+                // scaling
+                speedball *= h/350;
+                speedbat *= w/300;
+                speedbata *= w/300;
+                accely *= h/350;
+                D *= w/300;
+                len *= w/300;
+                batstroke *= h/350;
+                
+                // options
+                int erra = (int)len/4; // random err bat pos ai
+                int updatedelay = 20; // delay position update ai
+                int tocenter = 1; // ai behav after bat
+                int ai_depth = 1; // ai depth of path prediction (higher is harder to beat)
+                int showtraject = 1; // draw path of ball lines
+                int max_depth = 10; // max depth of path search
+                
+                // init
+                int xp = w/2;
+                int yp = h;
+                int xa = w/2;
+                int ya = 0;
+                int xb = w/2;
+                int yb = h/2;
+                int vxp = 0;
+                int vxa = speedbat;
+                float vxb = ((random()-0.5)*2)*(speedball*0.75);
+                float vyb = sqrt(speedball*speedball-vxb*vxb);
+                int scorep = 0;
+                int scorea = 0;
+                int restartgame = 0;
+                int updcnt = 0;
+                float grad = vyb/vxb;
+                float xpredict = w/2;
+                float ypredict = h/2;
+                float xpa = xpredict;
+                float xb_tmp = xb;
+                float yb_tmp = yb;
+                float vxb_tmp = vxb;
+                float grad_tmp = grad;
+                
+                void setup()
+                {
+                 size(w,h);
+                 background(#000000); 
+                 PFont fontA = loadFont("arial");
+                 textFont(fontA, (int)(14*h/350));  
+                } 
+                
+                void draw(){  
+                
+                 // clear
+                 background(#000000); // black
+                 
+                 // draw box
+                 strokeWeight(2);
+                 stroke(#444444); // darkish grey
+                 fill(#000000); // black
+                 rect(1,1,w,h);
+                
+                 xb_tmp = xb;
+                 yb_tmp = yb;
+                 vxb_tmp = vxb;
+                 grad_tmp = grad;
+                
+                 for (int i=0; i<max_depth; i++) {
+                  
+                   if ( vyb>0 ) {
+                     ypredict = h; 
+                   }
+                   else {
+                     ypredict = 0; 
+                   }
+                  
+                   int oob = 0;
+                   xpredict = xb_tmp + (ypredict-yb_tmp)/grad_tmp;
+                   
+                   if (xpredict<0) {
+                     xpredict = 0;
+                     oob = 1;
+                   }
+                   if (xpredict>w) {
+                     xpredict = w;
+                     oob = 1;
+                   }
+                  
+                   ypredict = yb_tmp + (xpredict-xb_tmp)*grad_tmp;
+                  
+                   if (i<ai_depth) xpa = xpredict;
+                  
+                   if (showtraject == 1) {
+                     strokeWeight(1);
+                     stroke(#999999); // gray
+                     line(xb_tmp,yb_tmp,xpredict,ypredict);
+                   }
+                  
+                   if (oob == 0) break; // exit loop
+                  
+                   vxb_tmp *= (-1); // inverse direction
+                   grad_tmp = vyb/vxb_tmp;
+                   xb_tmp = xpredict;
+                   yb_tmp = ypredict;
+                  
+                 }
+                
+                 xpa += ((random()-0.5)*erra);// add random noise for ai
+                 if ((vyb>0) && (tocenter > 0.5)) xpa = w/2; // ball moving away from ai
+                
+                 if ((vyb>0) || (updcnt>=updatedelay)) {
+                   updcnt = 0;
+                   if (xpa < xa) vxa = -speedbata;
+                   if (xpa > xa) vxa = speedbata;
+                   if (abs(xpa - xa)<=(0.05*len)) vxa = 0;
+                 }
+                
+                 updcnt += 1;
+                
+                 if (mouseX < xp) vxp = -speedbat;
+                 if (mouseX > xp) vxp = speedbat;
+                 if (abs(mouseX-xp)<=(0.05*len)) vxp = 0;
+                
+                 xp += vxp;
+                 xa += vxa;
+                 xb += vxb;
+                 yb += vyb;
+                
+                 if ((xa-len/2) < 0) vxa = 0;
+                 if ((xa+len/2) > w) vxa = 0;
+                
+                 if ((xp-len/2) < 0) vxp = 0;
+                 if ((xp+len/2) > w) vxp = 0;
+                
+                 if ( xb<0 ) {
+                   vxb = abs(vxb);
+                   xb = 0; 
+                 }
+                 if ( xb>w ) {
+                   vxb = -abs(vxb);
+                   xb = w; 
+                 }
+                
+                 grad = vyb/vxb;
+                
+                 // min max position
+                 if ( xa<(len/2) ) xa = (len/2); 
+                 if ( xa>(w-len/2) ) xa = (w-len/2); 
+                 if ( xp<(len/2) ) xp = (len/2); 
+                 if ( xp>(w-len/2) ) xp = (w-len/2); 
+                
+                 if (yb>h) {
+                   if ( (xb>=(xp-(len+batstroke)/2)) && (xb<=(xp+(len+batstroke)/2)) ) {
+                       vxb += 0.5*vxp;
+                       vyb = (-abs(vyb)-random()*accely);
+                       yb = h;
+                   }
+                   else { // ai scores point
+                       scorea += 1;
+                       restartgame = 1;
+                   }
+                 };
+                 if (yb<0) {
+                   if ( (xb>=(xa-(len+batstroke)/2)) && (xb<=(xa+(len+batstroke)/2)) ) {
+                     vxb += 0.5*vxa;
+                     vyb = (abs(vyb)+random()*accely);
+                     yb = 0;
+                   }
+                   else { // player scores points
+                     scorep += 1;
+                     restartgame = 1;
+                     tocenter = (int)(2*random()); // 50% probability for center strategy
+                     ai_depth = (int)(1+1.1*random()); // 10% probability for depth = 2 ai strength
+                   }
+                 };
+                 
+                 if (restartgame == 1) {
+                     restartgame = 0;
+                     speedball = 2*h/350;
+                     speedball *= (1 + 0.1*random());
+                     vxb = ((random()-0.5)*2)*(speedball*0.75);
+                     vyb = sqrt(speedball*speedball-vxb*vxb);
+                     xb = w/2;
+                     yb = h/2; 
+                 };
+           
+                 // draw ball
+                 noStroke();
+                 fill(#FF0000); // red
+                 ellipse(xb,yb,D,D);
+                 
+                 // draw bats
+                 strokeWeight(batstroke);
+                 stroke(#EEEEEE); // very light grey
+                        line(xp-len/2, yp-batstroke/2, xp+len/2, yp-batstroke/2);
+                 line(xa-len/2, ya+batstroke/2, xa+len/2, ya+batstroke/2);
+                
+                 fill(#FFFFFF);
+                 text("player: "+scorep+", "+ainame+": "+scorea, 10*w/300, 20*h/350);
+                }
+                
+              </script> <canvas width="w" height="h"></canvas> </div>
+          </div>
+        </div>
+        <div class="yui-b">
+          <ul>
+            <li><a target="_top" title="Home" href="index.html">Home</a></li>
+            <li><a target="_top" title="The game" href="thegame.html">THE GAME<br>
+              </a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="ft">
+        <p>© 2012 by Thiemo Meeuwissen<br>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
