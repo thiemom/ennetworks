@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
     <title>EnnetWorks</title>
@@ -115,30 +115,39 @@ li a:hover, a:active  {
                 var ainame = "computer"; // display name
                 
                 // check device
-                var deviceAgent = navigator.userAgent.toLowerCase();
-                var agentID = deviceAgent.match(/(iphone|ipad|android|mac)/);
+		try
+		{
+                   var deviceAgent = navigator.userAgent.toLowerCase();
+                   var agentID = deviceAgent.match(/(iphone|ipad|android|mac)/);
                 
-                if(agentID.indexOf("iphone")>=0){
-                  ainame = "iphone";
-                  w = 300;
-                  h = 360;
+                   if(agentID.indexOf("iphone")>=0){
+                      ainame = "iphone";
+                      w = (int)(screen.width/320*300);
+                      h = (int)(screen.height/480*360);
+                   }
+                   if(agentID.indexOf("ipad")>=0){
+                      ainame = "ipad";
+                      w = (int)(screen.width/320*300);
+                      h = (int)(screen.height/480*360);
+                    }
+                    if(agentID.indexOf("android")>=0){
+                      ainame = "android";
+                      w = (int)(screen.width/320*300-10); 
+                      h = (int)(screen.height/480-10);
+                    }
+                    if(agentID.indexOf("mac")>=0){
+                      ainame = "mac";
+                      w = 300;
+                      h = 300;
+                     }
                 }
-                if(agentID.indexOf("ipad")>=0){
-                  ainame = "ipad";
-                  w = (int)(screen.width/320*300);
-                  h = (int)(screen.height/480*360);
-                }
-                if(agentID.indexOf("android")>=0){
-                  ainame = "android";
-                  w = (int)(screen.width/320*300-10); 
-                  h = (int)(screen.height/480-10);
-                }
-                if(agentID.indexOf("mac")>=0){
-                  ainame = "mac";
-                  w = 300;
-                  h = 300;
-                }
-                
+		catch(err)
+		{
+		    w = 300;
+		    h = 300;
+  	            err.clear;
+		}
+
                 if ((w == undefined) || (w<=0) ) w = 300;
                 if ((h == undefined) || (h<=0) ) h = 300;
                 
